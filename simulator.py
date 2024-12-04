@@ -37,7 +37,7 @@ class Robot:
     def sonars(self):
         """Read from the sonar sensors
         
-        Output: a tuple of the left and right distances from the sonar sensor to the nearest object in centimeters
+        Output: a tuple of the left and right distances from the sonar sensor to the nearest object in mm (or pixels)
         """
         return self.driver.sonars()
     
@@ -78,6 +78,7 @@ class SimulatorDriver:
         self.start_simulation()
 
     def find_corners(self, x, y, heading):
+        """find right back corner, right front corner, left front corner, and left back corner, in that order"""
         i = np.array([1, 2, 3, 4])
         angle_to_corner = np.arctan(self.robot_width / self.robot_height)
         phi = heading - angle_to_corner
@@ -125,11 +126,56 @@ class SimulatorDriver:
             
             self.render()
     
+    def dist_to_box(self, sonar_position, h):
+        # from sonar position, draw a line in direction heading, and find distance to edge of box, which is:
+        a = None
+        b = None
+        if 0 < h < 90:
+            a = self.box_height - sonar_position.y
+            b = self.box_width - sonar_position.x #distance to right
+        elif 90 < h < 180:
+            a = sonar_position.x #d to left
+            b = self.box_height - sonar_position.y #d to top
+        elif 180 < h < 270:
+            a = sonar_position.y #d to bottom
+            b = sonar_position.x #d to left
+        elif 270 < h < 360:
+            a = self.box_width - sonar_position.x #d to right
+            b = sonar_position.y #d to bottom
+        elif h == 0:
+            return self.box_width - sonar_position.x
+        elif h == 90:
+            return self.box_height - sonar_position.y
+        elif h == 180:
+            return sonar_position.y
+        elif h == 270:
+            return sonar_position.x
+        else:
+            print(sonar_position.x, sonar_position.y)
+        d = min(a / np.cos(h), b/ np.sin(h))
+        return d
+
     def sonars(self):
+        corners = self.find_corners(self.x, self.y, self.heading)
+        left_front_corner = np.array([corners[0][0], corners[1][0]])
+        right_front_corner = np.array([corners[0][-1], corners[1][-1]])
+        v = right_front_corner - left_front_corner
+        direction_vector = v / np.linalg.norm(v)
+        left_sonar_position = left_front_corner + direction_vector * 3
+        left_sonar_position = Point(left_sonar_position[0], left_sonar_position[1])
+
+        v = left_front_corner - right_front_corner
+        direction_vector = v / np.linalg.norm(v)
+        right_sonar_position = right_front_corner + direction_vector * 3 
+        right_sonar_position = Point(right_sonar_position[0], right_sonar_position[1])
+
+        # draw a line between the front corners
+        # sonar positions are 3cm in from the front corners
+
         # figure out distance from left sonar to box wall
-        left_dist = None
+        left_dist = self.dist_to_box(left_sonar_position, self.heading)
         # figure out distance from right sonar to box wall
-        right_dist = None
+        right_dist = self.dist_to_box(right_sonar_position, self.heading)
         return left_dist, right_dist
 
     def render(self):
