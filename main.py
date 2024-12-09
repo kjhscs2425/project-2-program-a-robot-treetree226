@@ -9,9 +9,13 @@ def stomp(direction):
         robot.motors(1, -1, 0.76)
         robot.motors(1,1,0.5)
         robot.motors(-1,-1,0.5)
+        robot.motors(1,1,0.5)
+        robot.motors(-1,-1,0.5)
         robot.motors(-1,1,0.76)
     if direction== "left":
         robot.motors(-1, 1, 0.76)
+        robot.motors(1,1,0.5)
+        robot.motors(-1,-1,0.5)
         robot.motors(1,1,0.5)
         robot.motors(-1,-1,0.5)
         robot.motors(1,-1,0.76)
@@ -57,21 +61,54 @@ def knees():
     robot.motors(1, -1, 0.25)
 
 def getfunkywithit():
-    robot.motors(1,-1,2)
+    robot.motors(1,1,0.5)
+    robot.motors(1,-1,1.5)
 
 def chacha():
     left_distance, right_distance = robot.sonars()
-    robot.sonars(-1,1,4)
-    if left_distance <5:
-        robot.sonars(-1,-1,180)
+    robot.motors(1,1,1.5)
+    left_distance, right_distance = robot.sonars()
+    robot.motors(1,1,1.5)
+    if left_distance <5 and right_distance <5:
+        robot.motors(-1,-1,0.5)  
+    left_distance, right_distance = robot.sonars()
     if right_distance <5:
-        robot.sonars(-1,-1,180)
+        robot.motors(-1,-1,0.5)
+    robot.motors(-1,1,0.1)
+    left_distance, right_distance = robot.sonars()
+    if left_distance <5 and right_distance <5:
+        robot.motors(-1,-1,0.5) 
+    left_distance, right_distance = robot.sonars() 
+    if right_distance <5:
+        robot.motors(-1,-1,0.5)
+    robot.motors(1,-1,1)
+    left_distance, right_distance = robot.sonars()
+    if left_distance <5 and right_distance <5:
+        robot.motors(-1,-1,0.5)  
+    left_distance, right_distance = robot.sonars()
+    if right_distance <5:
+        robot.motors(-1,-1,0.5)
 
+def drebee(c):
+    return "thanks for being an awesome teacher," +c +"! you've been the sweetest and genuinely make me excited to learn. let me know if you ever need to talk. i'm always here for you!! hope you have a great holiday break!"
+
+def hello(b):
+    return "hi "+b +"!"
+
+def example_function(example_variable):
+    # function call gives a value to the function -> the function does something with that value
+    return example_variable
 
 while True:
     command = input("Command: ")
     if command == "exit":
         robot.exit()
+    if command == "drebee":
+        c=drebee(" Dr. Ebee")
+        print(c)
+    if command == "hi":
+        name=hello("drebee")
+        print(name)
     else:
         left_distance, right_distance = robot.sonars()
         print(f"Left sonar is {left_distance} from the wall.")
@@ -85,10 +122,8 @@ while True:
         hop()
         hop()
         stomp("right")
-        stomp("right")
         stomp("left")
-        stomp("left")
-        knees()
+        knees() 
         getfunkywithit()
         chacha()
         

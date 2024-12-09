@@ -15,7 +15,7 @@ Project Requirements:
 * [ ] each motor moves at least once
 * THIS ONE [ ] the robot's movement changes based on at least 5 readings of the sonar sensors**** Wait for new code update to implement this part!!
 * [ ] use at least 1 while loop OR recursive function call
-* THIS ONE [ ] at least one command (user input) causes the robot to move autonomously for at least 20 seconds
+
 
 Dr. EB Todo:
 * [ ] implement sonar distance in simulator
