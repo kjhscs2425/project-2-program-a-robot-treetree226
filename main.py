@@ -73,6 +73,7 @@ def chacha():
     robot.motors(-1,-1,1.5)
     left_distance, right_distance = robot.sonars()
     robot.motors(-1,1,2)
+    robot.motors(1,-1,2)
     if left_distance <5 and right_distance <5:
         robot.motors(-1,-1,0.5)  
     left_distance, right_distance = robot.sonars()
@@ -99,9 +100,9 @@ def drebee(c):
 def hello(b):
     return "hi "+b +"!"
 
-def example_function(example_variable):
-    # function call gives a value to the function -> the function does something with that value
-    return example_variable
+p =input("are you ready to cha cha?")
+o=input("are you sure?")
+oo=input("is it time to get funky?")
 
 while True:
     command = input("Command: ")
@@ -113,6 +114,12 @@ while True:
     if command == "hi":
         name=hello("drebee")
         print(name)
+    if command == "givemecoolgradetogetmeintocollegeplz":
+        print(p)
+        print(o)
+        print(oo)
+        print(o)
+        print(p)
     else:
         left_distance, right_distance = robot.sonars()
         print(f"Left sonar is {left_distance} from the wall.")
