@@ -69,6 +69,10 @@ def chacha():
     robot.motors(1,1,1.5)
     left_distance, right_distance = robot.sonars()
     robot.motors(1,1,1.5)
+    left_distance, right_distance = robot.sonars()
+    robot.motors(-1,-1,1.5)
+    left_distance, right_distance = robot.sonars()
+    robot.motors(-1,1,2)
     if left_distance <5 and right_distance <5:
         robot.motors(-1,-1,0.5)  
     left_distance, right_distance = robot.sonars()
