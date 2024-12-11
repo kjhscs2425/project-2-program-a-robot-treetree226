@@ -37,10 +37,9 @@ def backnowyall():
     robot.motors(1,1,0.5)
 
 def hop():
-    robot.motors(1,1,0.25)
-    robot.motors(-1,-1,0.25)
-    robot.motors(1,1,0.25)
-    robot.motors(-1,-1,0.25)
+    robot.motors(1,1,0.5)
+    robot.motors(-1,-1,0.5)
+    
 
 def knees():
     robot.motors(-1, 1, 0.25)
@@ -130,6 +129,8 @@ while True:
         print(f"Right sonar is {right_distance} from the wall.")
         slide("left")
         backnowyall()
+        hop()
+        hop()
         hop()
         hop()
         stomp("right")
