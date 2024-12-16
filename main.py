@@ -102,6 +102,7 @@ def hello(b):
 p =input("are you ready to cha cha?")
 o=input("are you sure?")
 oo=input("is it time to get funky?")
+ooo=input("is it really time to get funky?")
 
 while True:
     command = input("Command: ")
@@ -118,6 +119,7 @@ while True:
         print(o)
         print(oo)
         print(o)
+        print(ooo)
         print(p)
     else:
         left_distance, right_distance = robot.sonars()
